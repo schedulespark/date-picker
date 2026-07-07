@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ScheduleSpark Date Picker Demo</title>
+    <link rel="stylesheet" href="../dist/styles.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "../dist/date-picker": "../dist/date-picker.js",
+          "../dist/date-utils": "../dist/date-utils.js"
+        }
+      }
+    </script>
+    <style>
+      body {
+        align-items: center;
+        background: #f4f7f5;
+        display: flex;
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        justify-content: center;
+        margin: 0;
+        min-height: 100vh;
+      }
+
+      .demo-shell {
+        background: #fff;
+        border: 1px solid #d8e0dc;
+        border-radius: 12px;
+        box-shadow: 0 24px 60px rgb(17 24 39 / 14%);
+        padding: 24px;
+        width: 360px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="demo-shell">
+      <div id="picker"></div>
+    </main>
+    <script type="module">
+      import { createDatePicker } from "../dist/index.js";
+
+      const params = new URLSearchParams(window.location.search);
+      const view = params.get("view") ?? "day";
+
+      const picker = createDatePicker({
+        label: "Shift date",
+        minDate: "2026-01-01",
+        maxDate: "2026-12-31",
+        value: "2026-07-15"
+      });
+      picker.mount(document.querySelector("#picker"));
+
+      // Support ?view=month / ?view=year query params for screenshot capture.
+      if (view === "month" || view === "year") {
+        document.querySelector("input")?.focus();
+        document.querySelector(".ssp-date-picker__header-button")?.click();
+        if (view === "year") {
+          document.querySelector(".ssp-date-picker__header-button")?.click();
+        }
+      }
+    </script>
+  </body>
+</html>
